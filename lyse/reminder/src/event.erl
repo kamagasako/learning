@@ -43,6 +43,6 @@ time_to_go(Timeout={{_,_,_}, {_,_,_}}) ->
     Now = calendar:local_time(),
     ToGo = calendar:datetime_to_gregorian_seconds(Timeout) - calendar:datetime_to_gregorian_seconds(Now),
     Secs = if ToGo > 0 -> ToGo;
-              ToGo =< -> 0
+              ToGo =< 0 -> 0
            end,
     normalize(Secs).

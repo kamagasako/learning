@@ -13,7 +13,7 @@ loop(S = #state{}) ->
             loop(S#state{clients=NewClients});
 
         {Pid, MsgRef, {add, Name, Description, TimeOut}} ->
-            case valid_datetime(TimeOut) of
+            case validate_datetime(TimeOut) of
                 true ->
                     EventPid = event:start_link(Name, TimeOut),
                     NewEvents = orddict:store(Name,
@@ -61,7 +61,7 @@ loop(S = #state{}) ->
     end.
 
 init() ->
-    loop(#state{events=orddist:new(), clients=orddict:new()}).
+    loop(#state{events=orddict:new(), clients=orddict:new()}).
 
 validate_datetime({Date, Time}) ->
     try
@@ -76,7 +76,66 @@ valid_time({H,M,S}) -> valid_time(H,M,S).
 valid_time(H,M,S) when H >= 0, H < 24,
                        M >= 0, M < 60,
                        H >= 0, S < 60 -> true;
-validate_time(_,_,_) -> false.
+valid_time(_,_,_) -> false.
 
-send_to_clents(Msg, ClientDict) ->
-    orddict:map(fun(_Ref, Pid) -> Pid ! Msg end, CilentDict).
+send_to_clients(Msg, ClientDict) ->
+    orddict:map(fun(_Ref, Pid) -> Pid ! Msg end, ClientDict).
+
+start() ->
+    register(?MODULE, Pid = spawn(?MODULE, init, [])),
+    Pid.
+
+start_link() ->
+    register(?MODULE, Pid = spawn_link(?MODULE, init, [])),
+    Pid.
+
+terminate() ->
+    ?MODULE ! shutdown.
+
+subscribe(Pid) ->
+    Ref = erlang:monitor(process, whereis(?MODULE)),
+    ?MODULE ! {self(), Ref, {subscribe, Pid}},
+    receive
+        {Ref, ok} ->
+            {ok, Ref};
+        {'DOWN', Ref, process, _Pid, Reason} ->
+            {error, Reason}
+    after 5000 ->
+            {error, timeout}
+    end.
+
+add_event(Name, Description, TimeOut) ->
+    Ref = make_ref(),
+    ?MODULE ! {self(), Ref, {add, Name, Description, TimeOut}},
+    receive
+        {Ref, Msg} -> Msg
+    after 5000 ->
+            {error, timeout}
+    end.
+
+add_event2(Name, Description, TimeOut) ->
+    Ref = make_ref(),
+    ?MODULE ! {self(), Ref, {add, Name, Description, TimeOut}},
+    receive
+        {Ref, {error, Reason}} -> erlang:error(Reason);
+        {Ref, Msg} -> Msg
+    after 5000 ->
+            {error, timeout}
+    end.
+
+cancel(Name) ->
+    Ref = make_ref(),
+    ?MODULE ! {self(), Ref, {cancel, Name}},
+    receive
+        {Ref, ok} -> ok
+    after 5000 ->
+            {error, timeout}
+    end.
+
+listen(Delay) ->
+    receive
+        M = {done, _Name, _description} -> [M | listen(0)]
+    after Delay * 1000 ->
+            []
+    end.
+
