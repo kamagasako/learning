@@ -8,6 +8,15 @@ Learn You Some Erlang
 
 オンライン版はtypoがあったりするので、気になる方は書籍がお薦めです。
 
+## インストール
+
+apt一発で色々インストールされます。
+
+```
+$ sudo apt-get update
+$ sudo apt-get install erlang
+```
+
 ## Emacs設定
 
 1. M-x list-packageからerlangをインストール
