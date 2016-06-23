@@ -26,12 +26,15 @@ $ sudo apt-get install gauche
 ## Emacs設定
 
 scheme-modeはデフォルトでインストールされているっぽいです。
-major mode個別に設定するのは面倒なので、default-process-coding-systemを設定します。
 ~/.emacs.d/init.elを編集します。
 
 ```
+(setq default-process-coding-system '(utf-8 . utf-8))
+
 (setq scheme-program-name "gosh -i")
 (autoload 'scheme-mode "cmuscheme" "Major mode for Scheme." t)
 (autoload 'run-scheme "cmuscheme" "Run an inferior Scheme process." t)
 
 ```
+
+この設定だけではgosh (gauche)を起動している *scheme*バッファが開きませんのでご注意を。
