@@ -28,13 +28,13 @@ help_me(Animal) ->
            end,
     {Animal, "says " ++ Talk ++ "!"}.
 
-%hoge(cat) -> "meow";
-%hoge(beef) -> "mooo";
-%hoge(dog) -> "bark";
-%hoge(tree) -> "bark";
-%hoge(_) -> "hogefuga".
-%help_me_2(Animal) ->
-%    {Animal, "says " ++ hoge(Animal) ++ "!"}.
+%%hoge(cat) -> "meow";
+%%hoge(beef) -> "mooo";
+%%hoge(dog) -> "bark";
+%%hoge(tree) -> "bark";
+%%hoge(_) -> "hogefuga".
+%%help_me_2(Animal) ->
+%%    {Animal, "says " ++ hoge(Animal) ++ "!"}.
 
 prepend(X, []) ->
     [X];

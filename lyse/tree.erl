@@ -2,7 +2,7 @@
 
 -export([empty/0, insert/3, lookup/2]).
 
-% node: {node, {Key, Value, Smaller, Larger}}
+%% node: {node, {Key, Value, Smaller, Larger}}
 
 empty() -> {node, 'nil'}.
 
@@ -20,14 +20,14 @@ lookup(Key, {node, {Key, Val, _, _}}) -> {ok, Val}; % Key == NodeKey
 lookup(Key, {node, {NodeKey, _, Smaller, _}}) when Key < NodeKey -> lookup(Key, Smaller);
 lookup(Key, {node, {_, _, _, Larger}}) -> lookup(Key, Larger). % when Key > NodeKey
 
-% chapter 9
-%has_value(_, {node, 'nil'}) -> false;
-%has_value(Val, {node, {_, Val, _, _}}) -> true;
-%has_value(Val, {node, {_, _, Left, Right}}) ->
-%    case has_value(Val, Left) of
-%        true -> true;
-%        false -> has_value(Val, Right)
-%    end.
+%% chapter 9
+%%has_value(_, {node, 'nil'}) -> false;
+%%has_value(Val, {node, {_, Val, _, _}}) -> true;
+%%has_value(Val, {node, {_, _, Left, Right}}) ->
+%%    case has_value(Val, Left) of
+%%        true -> true;
+%%        false -> has_value(Val, Right)
+%%    end.
 has_value(Val, Tree) ->
     try has_value1(Val, Tree) of
         false -> false

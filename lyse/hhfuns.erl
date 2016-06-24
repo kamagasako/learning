@@ -5,7 +5,7 @@ one() -> 1.
 two() -> 2.
 
 add(X, Y) -> X() + Y().
-% hhfuns:add(fun hhfuns:one/0, fun hhfuns:two/0) % fun Module:Function/Arity
+%% hhfuns:add(fun hhfuns:one/0, fun hhfuns:two/0) % fun Module:Function/Arity
 
 increment([]) -> [];
 increment([H|T]) -> [H+1|increment(T)].
@@ -30,9 +30,9 @@ base(A) ->
     F = fun() -> A * B end,
     F().
 
-%base() ->
-%    A = 1,
-%    (fun(A) -> A = 2 end)(2).
+%%base() ->
+%%    A = 1,
+%%    (fun(A) -> A = 2 end)(2).
 
 even(L) -> lists:reverse(even(L, [])).
 even([], Acc) -> Acc;
