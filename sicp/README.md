@@ -23,6 +23,31 @@ $ sudo apt-get update
 $ sudo apt-get install gauche
 ```
 
+Macならhomebrewでインストールします。
+
+```
+$ brew update
+$ brew install gauche
+```
+
+### rlwrap
+
+後述のEmacsを使う時は気にしなくてよいのですが、ターミナルでgauche (gosh)を実行する場合、そのままではCtrlキーによる履歴の参照やカーソルの移動などができません。そこでrlwrapをインストールします。
+
+```
+$ sudo apt-get install rlwrap
+or
+$ brew install rlwrap
+```
+
+使い方は簡単で、goshの前にrlwrapを置くだけです。
+
+```
+$ rlwrap gosh
+```
+
+rlwrapがgoshをラップして、コマンドライン履歴やカーソル移動などができるようになります。
+
 ## Emacs設定
 
 scheme-modeはデフォルトでインストールされているっぽいです。
