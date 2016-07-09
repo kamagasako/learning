@@ -23,6 +23,10 @@ $ sudo apt-get install erlang
 2. ~/.emacs.d/init.elで設定
 
 ```
-(require 'erlang-start)
+(setq erlang-root-dir "/usr/local/lib/erlang") ; パスは環境に合わせる
+(setq exec-path (cons "/usr/local/lib/erlang/bin" exec-path)) ; パスは環境に合わせる
 (setq erlang-electric-commands '(erlang-electric-newline))
+(require 'erlang-start)
 ```
+
+`C-c C-z`でバッファを分割してErlangシェル起動、`C-u C-k`でコンパイル、等、便利に使えます。詳細は[erlang-modeのドキュメント](http://erlang.org/doc/man/erlang.el.html)を参照して下さい。
