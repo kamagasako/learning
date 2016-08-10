@@ -1,10 +1,10 @@
 # learning
 for private learning
 
-* lyse: Learn You Some Erlang 
-* sicp: Structure And Interpretation of Computer Programs
+* erlang/lyse: Learn You Some Erlang 
+* scheme/sicp: Structure And Interpretation of Computer Programs
 
 個人的な学習用です
 
-* lyse: すごいErlangゆかいに学ぼう
-* sicp: 計算機プログラムの構造と解釈
+* erlang/lyse: すごいErlangゆかいに学ぼう
+* erlang/sicp: 計算機プログラムの構造と解釈
