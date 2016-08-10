@@ -1,2 +1,3 @@
 snmp/agent/conf/usm.conf
 snmp/agent/db/*
+snmp/manager/db/*
