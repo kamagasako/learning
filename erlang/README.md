@@ -9,6 +9,30 @@ $ sudo apt-get update
 $ sudo apt-get install erlang
 ```
 
+### 最新版のインストール
+
+2016/08/19現在、Debian testingのErlangは最新の19ではなく18で、Debian公式パッケージではexperimentalのみが19です。
+そこで、Erlang Solutionsが公開しているパッケージを導入してみましょう。
+
+```
+$ wget https://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb
+$ sudo dpkg -i erlang-solutions_1.0_all.deb
+(ダイアログにDebianのバージョンを入力。stableならjessie, testingならstretch, 等)
+$ sudo apt-get update
+$ sudo apt-get install erlang
+
+$ erl
+Erlang/OTP 19 [erts-8.0] [source] [64-bit] [smp:8:8] [async-threads:10] [kernel-poll:false]
+
+Eshell V8.0  (abort with ^G)
+1> 
+```
+
+無事に19がインストールされました。
+ちなみに`apt-cache show erlang`してみると、メンテナはDebian Erlang Packagersってなってます。
+
+確認していませんが、同じ手順でstable (jessie)にもインストールできると思います。
+
 ## Emacs設定
 
 1. `M-x list-package`からerlangをインストール
