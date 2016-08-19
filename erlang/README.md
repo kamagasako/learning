@@ -11,7 +11,7 @@ $ sudo apt-get install erlang
 
 ## Emacs設定
 
-1. M-x list-packageからerlangをインストール
+1. `M-x list-package`からerlangをインストール
 2. ~/.emacs.d/init.elで設定
 
 ```
