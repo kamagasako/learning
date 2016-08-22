@@ -33,5 +33,5 @@ iex(1)>
 ## Emacs
 
 `M-x list-package` してelixir-modeをインストール。
-Emacsを立ち上げ直してElixirのソースファイル(拡張子 `.ex`)を開くと自動的にelixir-modeになる。
+(Emacsを立ち上げ直して) Elixirのソースファイル(拡張子 `.ex`)を開くと自動的にelixir-modeになる。
 
