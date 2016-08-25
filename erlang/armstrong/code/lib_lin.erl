@@ -1,5 +1,11 @@
-%%% https://github.com/everpeace/programming-erlang-code/blob/master/code/lib_lin.erl
-
+%% ---
+%%  Excerpted from "Programming Erlang, Second Edition",
+%%  published by The Pragmatic Bookshelf.
+%%  Copyrights apply to this code. It may not be used to create training material, 
+%%  courses, books, articles, and the like. Contact us if you are in doubt.
+%%  We make no guarantees that this code is fit for any purpose. 
+%%  Visit http://www.pragmaticprogrammer.com/titles/jaerlang2 for more book information.
+%%---
 -module(lib_lin).
 
 %% (c) Joe Armstrong 1998
@@ -9,7 +15,6 @@
 %% pow(A, B, M) => (A^B) mod M
 %% examples pow(9726,3533,11413) = 5761
 %%          pow(5971,6597,11413) = 9726
-
 
 pow(A, 1, M) ->
     A rem M;
@@ -25,7 +30,6 @@ pow(A, B, M) ->
 	_  -> (P*P*A) rem M
     end.
 
-
 %% inv(A, B) = C | no_inverse
 %%    computes C such that
 %%    A*C mod B = 1
@@ -33,7 +37,6 @@ pow(A, B, M) ->
 %% examples inv(28, 75) = 67.
 %%          inv(3533, 11200) = 6597
 %%          inv(6597, 11200) = 3533
-
 
 inv(A, B) ->
     case solve(A, B) of
@@ -45,11 +48,9 @@ inv(A, B) ->
 	    no_inverse
     end.
 
-
 %% solve(A, B) => {X, Y} | insoluble
 %%   solve the linear congruence
 %%   A * X - B * Y = 1
-
 
 solve(A, B) ->
     case catch s(A,B) of
@@ -72,10 +73,8 @@ s(A, B)  ->
 
 
 
-
 %% converts a string to a base 256 integer
 %% converts a base 256 integer to a string
-
 
 str2int(Str) -> str2int(Str, 0).
 
@@ -90,9 +89,7 @@ int2str(N, L) ->
     H = N - N1 * 256,
     int2str(N1, [H|L]).
 
-
 %% greatest common devisor
-
 
 gcd(A, B) when A < B -> gcd(B, A);
 gcd(A, 0) -> A;
