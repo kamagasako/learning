@@ -21,7 +21,7 @@
 
 ; 論理行で移動
 (setq line-move-visual nil)
-; 折り返し 
+; 折り返し
 (setq truncate-lines nil)
 (setq truncate-partial-width-windows nil)
 
@@ -55,14 +55,14 @@
       (t
        (setq hl-line-face 'bold)))
 
-; tab
+; tab, indent
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 8)
 (setq-default c-basic-offset 4)
 
 ; package
 (require 'package)
-(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
+(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 (package-initialize)
 (when (not package-archive-contents)
   (package-refresh-contents))
@@ -97,7 +97,7 @@
   "Hooks for Web mode."
   (setq web-mode-markup-indent-offset 2)
   (setq web-mode-code-indent-offset 2)
-)
+  )
 (add-hook 'web-mode-hook  'my-web-mode-hook)
 
 ; skk
@@ -107,16 +107,16 @@
 (global-unset-key "\C-xj")
 (global-set-key "\C-x\C-j" 'skk-mode)
 (add-hook 'isearch-mode-hook
-	  #'(lambda ()
-	      (when (and (boundp 'skk-mode)
-			 skk-mode
-			 skk-isearch-mode-enable)
-		(skk-isearch-mode-setup))))
+          #'(lambda ()
+              (when (and (boundp 'skk-mode)
+                         skk-mode
+                         skk-isearch-mode-enable)
+                (skk-isearch-mode-setup))))
 (add-hook 'isearch-mode-end-hook
-	  #'(lambda ()
-	      (when (and (featurep 'skk-isearch)
-			 skk-isearch-mode-enable)
-		                (skk-isearch-mode-cleanup))))
+          #'(lambda ()
+              (when (and (featurep 'skk-isearch)
+                         skk-isearch-mode-enable)
+                (skk-isearch-mode-cleanup))))
 (setq dired-bind-jump nil) ; prevent to start dired
 
 ;; malabar-mode
@@ -131,15 +131,15 @@
   (setq malabar-groovy-lib-dir (concat user-emacs-directory "site-lisp/malabar-1.5-SNAPSHOT/lib"))
   (add-to-list 'auto-mode-alist '("\\.java\\'" . malabar-mode))
   (setq malabar-import-excluded-classes-regexp-list
-	(append '("^java\\.awt\\.*$"
-		  "^com\\.sun\\.*$"
-		  "^org\\.omg\\.*$")
-		malabar-import-excluded-classes-regexp-list))
+        (append '("^java\\.awt\\.*$"
+                  "^com\\.sun\\.*$"
+                  "^org\\.omg\\.*$")
+                malabar-import-excluded-classes-regexp-list))
   (add-hook 'malabar-mode-hook
-	    (lambda () 
-	      (setq indent-tabs-mode nil)
-	      (add-hook 'after-save-hook 'malabar-compile-file-silently
-			nil t)))
+            (lambda () 
+              (setq indent-tabs-mode nil)
+              (add-hook 'after-save-hook 'malabar-compile-file-silently
+                        nil t)))
   )
 
 ; customize
