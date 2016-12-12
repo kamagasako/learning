@@ -15,19 +15,12 @@
 
 ; misc
 (auto-compression-mode t)
+(line-number-mode t)
+(column-number-mode t)
+(tool-bar-mode 0)
 
 ; 論理行で移動
 (setq line-move-visual nil)
-; 折り返し
-(defun toggle-truncate-lines ()
-  "折り返し表示をトグル動作します."
-  (interactive)
-  (if truncate-lines
-      (setq truncate-lines nil)
-    (setq truncate-lines t))
-  (recenter))
-(global-set-key "\C-c\C-l" 'toggle-truncate-lines)
-
 ; 折り返し 
 (setq truncate-lines nil)
 (setq truncate-partial-width-windows nil)
@@ -48,12 +41,9 @@
 
 ; key
 (global-set-key "\C-h" 'delete-backward-char)
+
 ; color
 (global-font-lock-mode t)
-(line-number-mode t)
-(column-number-mode t)
-(tool-bar-mode 0)
-
 ; hl-line
 (require 'hl-line)
 (global-hl-line-mode t)
@@ -65,18 +55,17 @@
       (t
        (setq hl-line-face 'bold)))
 
-; package
-(require 'package)
-(add-to-list 'package-archives
-             '("melpa" . "http://melpa.org/packages/") t)
-(package-initialize)
-(when (not package-archive-contents)
-  (package-refresh-contents))
-
 ; tab
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 8)
 (setq-default c-basic-offset 4)
+
+; package
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
+(package-initialize)
+(when (not package-archive-contents)
+  (package-refresh-contents))
 
 ; c
 (add-hook 'c-mode-hook
@@ -86,9 +75,6 @@
 ; ensime
 (require 'ensime)
 (add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
-;(add-hook 'scala-mode-hook #'yas-minor-mode)
-;(define-key company-active-map [tab] nil)
-;(setq ensime-completion-style 'auto-complete)
 
 ; erlang
 (require 'erlang-start)
@@ -102,6 +88,7 @@
 ; web-mode
 (require 'web-mode)
 (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.js\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.php\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.scala\\.html\\'" . web-mode))
 (setq web-mode-engines-alist
@@ -114,9 +101,8 @@
 (add-hook 'web-mode-hook  'my-web-mode-hook)
 
 ; skk
-;(require 'skk-autoloads)
 (setq default-input-method "japanese-skk"
-      skk-large-jisyo (expand-file-name "/usr/share/skk/SKK-JISYO.L")
+      skk-large-jisyo "/usr/share/skk/SKK-JISYO.L"
       skk-use-jisx0201-input-method t)
 (global-unset-key "\C-xj")
 (global-set-key "\C-x\C-j" 'skk-mode)
@@ -131,7 +117,32 @@
 	      (when (and (featurep 'skk-isearch)
 			 skk-isearch-mode-enable)
 		                (skk-isearch-mode-cleanup))))
+(setq dired-bind-jump nil) ; prevent to start dired
 
+;; malabar-mode
+;; http://qiita.com/toshikiw/items/389430db19561307d037
+(require 'cedet)
+(require 'semantic)
+(load "semantic/loaddefs.el")
+(semantic-mode 1)
+(add-to-list 'load-path "~/.emacs.d/site-lisp/malabar-1.5-SNAPSHOT/lisp")
+(require 'malabar-mode)
+(when (require 'malabar-mode nil t)
+  (setq malabar-groovy-lib-dir (concat user-emacs-directory "site-lisp/malabar-1.5-SNAPSHOT/lib"))
+  (add-to-list 'auto-mode-alist '("\\.java\\'" . malabar-mode))
+  (setq malabar-import-excluded-classes-regexp-list
+	(append '("^java\\.awt\\.*$"
+		  "^com\\.sun\\.*$"
+		  "^org\\.omg\\.*$")
+		malabar-import-excluded-classes-regexp-list))
+  (add-hook 'malabar-mode-hook
+	    (lambda () 
+	      (setq indent-tabs-mode nil)
+	      (add-hook 'after-save-hook 'malabar-compile-file-silently
+			nil t)))
+  )
+
+; customize
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
