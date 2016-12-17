@@ -18,6 +18,7 @@
 (line-number-mode t)
 (column-number-mode t)
 (tool-bar-mode 0)
+(setq ring-bell-function 'ignore)
 
 ; 論理行で移動
 (setq line-move-visual nil)
