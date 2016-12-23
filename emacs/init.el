@@ -76,7 +76,8 @@
 ; ensime
 (require 'ensime)
 (add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
-(setq ensime-startup-notification nil)
+(setq ensime-startup-notification nil
+      ensime-startup-snapshot-notification nil)
 
 ; erlang
 (require 'erlang-start)
