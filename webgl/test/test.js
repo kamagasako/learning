@@ -7,31 +7,33 @@ $(document).ready(() => {
   // Stats, dat.GUI
   let stats = initStats();
   let controls = new function() {
-    this.cameraX = -30;
-    this.cameraY = 40;
-    this.cameraZ = 30;
+    this.cameraX = -50;
+    this.cameraY = 100;
+    this.cameraZ = 50;
     this.planeX = - Math.PI / 2;
     this.planeY = 0;
     this.planeZ = 0;
-    //this.jX = 0;
-    //this.jY = 0;
-    //this.jZ = 0;
+    this.jX = 10;
+    this.jY = -20;
+    this.jZ = 0;
     this.rotateJ1 = false;
     this.rotateJ2 = false;
+    this.rotateJ3 = false;
     this.rotateSpeed = 0.05;
   }
   let gui = new dat.GUI();
   gui.add(controls, 'cameraX', -50, 50);
-  gui.add(controls, 'cameraY', -50, 50);
+  gui.add(controls, 'cameraY', 0, 100);
   gui.add(controls, 'cameraZ', -50, 50);
   gui.add(controls, 'planeX', - Math.PI, Math.PI);
   gui.add(controls, 'planeY', - Math.PI, Math.PI);
   gui.add(controls, 'planeZ', - Math.PI, Math.PI);
-  //gui.add(controls, 'jX', -20, 20);
-  //gui.add(controls, 'jY', -20, 20);
-  //gui.add(controls, 'jZ', -20, 20);
+  gui.add(controls, 'jX', -20, 20);
+  gui.add(controls, 'jY', -20, 20);
+  gui.add(controls, 'jZ', -20, 20);
   gui.add(controls, 'rotateJ1');
   gui.add(controls, 'rotateJ2');
+  gui.add(controls, 'rotateJ3');
   gui.add(controls, 'rotateSpeed', 0, 0.2);
 
   // 床板
@@ -57,14 +59,25 @@ $(document).ready(() => {
   j1.add(j2);
 
   // J3
-  let j3Geo = new THREE.CylinderGeometry(5, 5, 20, 100);
+  let j3Geo = new THREE.CylinderGeometry(5, 5, 50, 100);
   let j3Mat = new THREE.MeshLambertMaterial({ color: 0x00FF00 });
   let j3 = new THREE.Mesh(j3Geo, j3Mat);
-  j3.position.x = 10;
+  j3.position.x = 25;
   j3.position.y = -5;
   j3.rotation.z = Math.PI / 2;
   j2.add(j3);
 
+  // J4
+  let j4Geo = new THREE.CylinderGeometry(5, 5, 20, 100);
+  let j4Mat = new THREE.MeshLambertMaterial({ color: 0x0000FF });
+  let j4 = new THREE.Mesh(j4Geo, j4Mat);
+  j4.rotation.z = Math.PI / 2;
+  j4.position.x = 10;
+  j4.position.y = -20;
+  j3.add(j4);
+
+  // J5
+  
 
   // 光源
   let spotLight = new THREE.SpotLight(0xFFFFFF);
@@ -104,9 +117,9 @@ $(document).ready(() => {
     camera.position.z = controls.cameraZ;
 
     // 動作確認
-    //j.position.x = controls.jX;
-    //j.position.y = controls.jY;
-    //j.position.z = controls.jZ;
+    j4.position.x = controls.jX;
+    j4.position.y = controls.jY;
+    j4.position.z = controls.jZ;
 
     // 回転
     if (controls.rotateJ1) {
@@ -120,6 +133,12 @@ $(document).ready(() => {
       q.setFromAxisAngle(new THREE.Vector3(1, 0, 0), controls.rotateSpeed);
       q.multiply(j2.quaternion.clone());
       j2.quaternion.copy(q);
+    }
+    if (controls.rotateJ3) {
+      let q = new THREE.Quaternion();
+      q.setFromAxisAngle(new THREE.Vector3(1, 0, 0), controls.rotateSpeed);
+      q.multiply(j3.quaternion.clone());
+      j3.quaternion.copy(q);
     }
 
     renderer.render(scene, camera);
