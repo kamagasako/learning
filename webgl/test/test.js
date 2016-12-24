@@ -1,6 +1,19 @@
 $(document).ready(() => {
   console.log('ready!');
 
+  // データ自動更新
+  let data = [0, 0, 0, 0, 0, 0];
+  setInterval(() => {
+    for (let i = 0; i < data.length; i++) {
+      let tmp = Math.floor(Math.random() * 360); // 0 - 359
+      data[i] = tmp > 180 ? tmp - 360 : tmp; // -179 - 180
+    }
+    console.log(data);
+  }, 1000);
+
+  // 現在の状況
+  let status = [0, 0, 0, 0, 0, 0];
+
   // シーン
   let scene = new THREE.Scene();
 
@@ -19,7 +32,7 @@ $(document).ready(() => {
     this.rotateJ4 = false;
     this.rotateJ5 = false;
     this.rotateJ6 = false;
-    this.rotateSpeed = 0.05;
+    this.rotateSpeed = 0.1;
   }
   let gui = new dat.GUI();
   gui.add(controls, 'cameraX', -100, 100);
@@ -34,7 +47,7 @@ $(document).ready(() => {
   gui.add(controls, 'rotateJ4');
   gui.add(controls, 'rotateJ5');
   gui.add(controls, 'rotateJ6');
-  gui.add(controls, 'rotateSpeed', 0, 0.2);
+  gui.add(controls, 'rotateSpeed', -0.1, 0.1);
 
   // 床板
   let planeGeo = new THREE.PlaneGeometry(20, 20);
@@ -149,11 +162,53 @@ $(document).ready(() => {
     //j7.position.z = controls.jZ;
 
     // 回転
+    const VECTORS = {
+      x : new THREE.Vector3(1, 0, 0),
+      y : new THREE.Vector3(0, 1, 0),
+      z : new THREE.Vector3(0, 0, 1),
+    }
+    const ACTUATORS = [
+      [ j1, controls.rotateJ1, VECTORS.y ],
+      [ j2, controls.rotateJ2, VECTORS.x ],
+      [ j3, controls.rotateJ3, VECTORS.x ],
+      [ j4, controls.rotateJ4, VECTORS.x ],
+      [ j5, controls.rotateJ5, VECTORS.x ],
+      [ j6, controls.rotateJ6, VECTORS.x ]
+    ];
+    for (let i = 0; i < ACTUATORS.length; i++) {
+      let actuator = ACTUATORS[i];
+      if (actuator[1]) {
+        let speed = controls.rotateSpeed;
+        if (data[i] > status[i]) {
+          speed *= 1;
+        } else if (data[i] < status[i]) {
+          speed *= -1;
+        } else {
+          speed *= 0;
+        }
+        let q = new THREE.Quaternion();
+        q.setFromAxisAngle(actuator[2], speed);
+        q.multiply(actuator[0].quaternion.clone());
+        actuator[0].quaternion.copy(q);
+        status[i] += (speed * 180 / Math.PI);
+      }
+    }
+    /*
     if (controls.rotateJ1) {
+      let speed = controls.rotateSpeed;
+      if (data[0] > status[0]) {
+        speed *= 1;
+      } else if (data[0] < status[0]) {
+        speed *= -1;
+      } else {
+        speed *= 0;
+      }
       let q = new THREE.Quaternion();
-      q.setFromAxisAngle(new THREE.Vector3(0, 1, 0), controls.rotateSpeed);
+      //q.setFromAxisAngle(new THREE.Vector3(0, 1, 0), controls.rotateSpeed);
+      q.setFromAxisAngle(new THREE.Vector3(0, 1, 0), speed);
       q.multiply(j1.quaternion.clone());
       j1.quaternion.copy(q);
+      status[0] += (speed * 180 / Math.PI);
     }
     if (controls.rotateJ2) {
       let q = new THREE.Quaternion();
@@ -185,7 +240,7 @@ $(document).ready(() => {
       q.multiply(j6.quaternion.clone());
       j6.quaternion.copy(q);
     }
-
+    */
     renderer.render(scene, camera);
     requestAnimationFrame(render);
   };
