@@ -1,9 +1,9 @@
-$(document).ready(() => {
+$(document).ready(function() {
   console.log('ready!');
 
   // データ自動更新
   let data = [0, 0, 0, 0, 0, 0];
-  setInterval(() => {
+  setInterval(function() {
     for (let i = 0; i < data.length; i++) {
       let tmp = Math.floor(Math.random() * 360); // 0 - 359
       data[i] = tmp > 180 ? tmp - 360 : tmp; // -179 - 180
@@ -148,7 +148,7 @@ $(document).ready(() => {
   document.getElementById('WebGL-output').appendChild(renderer.domElement);
 
   // 画面更新
-  let render = () => {
+  let render = function() {
     stats.update();
 
     // カメラ
@@ -250,7 +250,7 @@ $(document).ready(() => {
 });
 
 // Stats初期化
-let initStats = () => {
+let initStats = function() {
   var stats = new Stats();
   stats.setMode(0);
   stats.domElement.style.position = 'absolute';
