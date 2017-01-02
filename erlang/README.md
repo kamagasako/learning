@@ -1,4 +1,4 @@
-#Erlang
+# Erlang
 
 ## インストール
 
@@ -48,3 +48,19 @@ Eshell V8.0  (abort with ^G)
 `C-c C-z`でバッファを分割してErlangシェル起動、`C-c C-k`でコンパイル、等、便利に使えます。詳細は[erlang-modeのドキュメント](http://erlang.org/doc/man/erlang.el.html)を参照して下さい。
 
 erlang-modeで起動したErlangシェルを終了させる方法ですが、そのままではシェルから抜ける`C-g`はEmacsに取られてしまいます。`C-g`の前に`C-q`を入力してから`C-g [return]`でシェルから抜けて`q`で終了できます。
+
+## ビルドツール rebar3
+
+REPLでは必要ありませんが、Erlangでアプリを実装する場合はビルドツールがあった方が便利です。
+私はrebar3を利用しています。Debianのrebarパッケージは3ではなく2ですので、自前でインストールする必要があります。
+
+### インストール
+
+私は下記ページを参考にソースからインストールし、適宜 `rebar3 local upgrade` で更新しています。
+
+https://github.com/erlang/rebar3
+
+### 使い方
+
+http://www.rebar3.org/docs
+
