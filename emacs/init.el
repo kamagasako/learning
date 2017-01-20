@@ -68,6 +68,9 @@
 (when (not package-archive-contents)
   (package-refresh-contents))
 
+; text
+(setq text-mode-hook 'turn-off-auto-fill)
+
 ; c
 (add-hook 'c-mode-hook
           '(lambda ()
