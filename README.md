@@ -11,6 +11,7 @@ for private learning
 * javascript
 * python3/deeplearning
 * scheme/sicp: Structure And Interpretation of Computer Programs
+* tensorflow
 * webgl
 
 個人的な学習用です
@@ -26,4 +27,5 @@ for private learning
 * javascript
 * python3/deeplearning
 * scheme/sicp: 計算機プログラムの構造と解釈
+* tensorflow
 * webgl: WebGL
